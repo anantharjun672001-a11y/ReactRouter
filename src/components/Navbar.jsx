@@ -1,22 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-    return (
-        <div>
-            <nav className="bg-pink-200 fixed w-full z-20 top-0 start-0 border-b-pink-200 border-default">
-            <div className="max-7xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    
-                    <span className="self-center text-xl text-heading font-extrabold text-purple-950 whitespace-nowrap">Shopsy !</span>
-                </Link>
-                <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                
-                </div>
-            </div>
-            </nav>
-        </div>
-    );
+  const navigate = useNavigate();
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+
+  return (
+    <nav className="bg-pink-200 fixed w-full z-20 top-0 border-b border-pink-300">
+      <div className="max-w-7xl flex items-center justify-between mx-auto p-4">
+
+        <Link to="/" className="text-xl font-extrabold text-purple-950">
+          Shopsy !
+        </Link>
+
+        <button
+          onClick={() => navigate("/cart")}
+          className="bg-purple-700 text-white px-4 py-1 rounded-lg"
+        >
+          Cart ({totalQty})
+        </button>
+
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;
